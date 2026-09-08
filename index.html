@@ -113,8 +113,8 @@
     shadow-intensity="2.0"
     shadow-softness="0.1"
     exposure="1.2"
-    camera-orbit="0deg 75deg 105%"
-    orientation="0deg 0deg 0deg"
+    camera-target="auto auto auto"
+    camera-orbit="0deg 75deg auto"
     min-camera-orbit="auto 0deg 30%"  
     max-camera-orbit="auto 180deg 200%">
     
@@ -138,14 +138,14 @@
     const mv = document.querySelector("#craneo-viewer");
 
     mv.addEventListener('load', () => {
-      // Ajuste de textura mate
+      // 1. Re-centrar el pivote de rotación en el centro real del modelo (Bounding Box Center)
+      mv.cameraTarget = "auto auto auto";
+
+      // 2. Ajustar material para eliminar brillos plásticos
       if (mv.model && mv.model.materials && mv.model.materials[0]) {
         mv.model.materials[0].pbrMetallicRoughness.setRoughnessFactor(0.70);
         mv.model.materials[0].pbrMetallicRoughness.setMetalnessFactor(0.0);
       }
-
-      // Forzar alineación al cargar
-      mv.orientation = "90deg 0deg 270deg";
     });
 
     function cambiarModoLuz(modo) {
